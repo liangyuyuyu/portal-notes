@@ -1,0 +1,349 @@
+@value-var-color: #000000;
+
+#value-var-test {
+    color: @value-var-color;
+}
+
+@selector-var-id: #head;
+@selector-var-name: head;
+
+@{selector-var-id} {
+    // 变量名必须使用{}包裹
+    color: #FFFFFF;
+}
+
+#@{selector-var-name} {
+    color: #FFFFFF;
+}
+
+@attr-var: color;
+@value-var-color: #f00000;
+
+.attr-var-test {
+    @{attr-var}: @value-var-color; // 变量名必须使用{}包裹
+}
+
+@url-var-path: './assets/images';
+
+.url-var-test {
+    background: url('@{url-var-path}/icon.png');
+}
+
+@declaration-var: {
+    background: #0f0000
+}
+
+.declaration-var-test {
+    @declaration-var();
+}
+
+@var-calc-width: 50px;
+@var-calc-color: #222;
+
+.var-calc-test {
+    width: (@var-calc-width - 10)* 2;
+    color: @var-calc-color * 3 - 1;
+    background-color: @var-calc-color + #333;
+}
+
+@var-scope-width: @var-scope-width-tmp;
+@var-scope-width-tmp: 100%;
+
+.var-scope-test {
+    width: @var-scope-width;
+    @var-scope-width-tmp: 9%;
+}
+
+@var-define-var-content: 'I am Less';
+@var-define-var-tmp: 'var-define-var-content';
+
+.var-define-var-test::after {
+    content: @@var-define-var-tmp; //两个@
+}
+
+.mixins-class {
+    border: 1px solid red;
+}
+
+#mixins-id {
+    font-size: 12px;
+}
+
+.mixins-class-test {
+    color: #ff0000;
+    .mixins-class(); // 通过.className混入
+}
+
+.mixins-id-test {
+    color: #404040;
+    #mixins-id(); // 通过#idName混入
+}
+
+#nesting-test {
+    color: #00ff00;
+
+    div {
+        color: #0000ff;
+
+        span {
+            font-size: 12px;
+        }
+    }
+}
+
+#nesting-use-test {
+    &::after {
+        color: #ffff00;
+    }
+
+    .header {
+        &-content {
+            // 解析成CSS为: #nesting-use-test .header-content
+            color: #0ffff0;
+        }
+    }
+}
+
+.mixins-class() {
+    border: 1px solid red;
+}
+
+#mixins-id() {
+    font-size: 12px;
+}
+
+.mixins-class-test {
+    color: #ff0000;
+    .mixins-class(); // 通过.className混入
+}
+
+.mixins-id-test {
+    color: #404040;
+    #mixins-id(); // 通过#idName混入
+}
+
+.default-params-border(@a: 10px, @b: 50px, @c: 30px, @color: #000) {
+    border: solid 1px @color;
+    box-shadow: @arguments; // 指代的是全部参数
+}
+
+#main {
+    .default-params-border(0px, 5px, 30px, red); // 必须带着单位
+}
+
+#wrap {
+    .default-params-border(0px);
+}
+
+#content {
+    .default-params-border; // 等价于.border()
+}
+
+.triangle(top, @width: 20px, @color: #000) {
+    border-color: transparent transparent @color transparent;
+}
+
+.triangle(right, @width: 20px, @color: #000) {
+    border-color: transparent @color transparent transparent;
+}
+
+.triangle(bottom, @width: 20px, @color: #000) {
+    border-color: @color transparent transparent transparent;
+}
+
+.triangle(left, @width: 20px, @color: #000) {
+    border-color: transparent transparent transparent @color;
+}
+
+.triangle(@_, @width: 20px, @color: #000) {
+    border-style: solid;
+    border-width: @width;
+}
+
+#main {
+    .triangle(left, 50px, #999)
+}
+
+#namespace-card() {
+    background: #723232;
+
+    .d(@w: 300px) {
+        width: @w;
+
+        #a(@h: 300px) {
+            height: @h;
+            width: @w + 1;
+        }
+    }
+}
+
+#wrap {
+    // 调用#a()方法时，父元素不能加括号；
+    // 下面会报错，@w为underfined，需要先调用.d()
+    // #namespace-card > .d > #a(100px);
+    #namespace-card>.d;
+    #a(100px);
+}
+
+#main {
+    #namespace-card .d();
+}
+
+#con {
+    //不得单独使用命名空间的方法
+    //.d() 如果前面没有引入命名空间 #namespace-card ，将会报错
+
+    #namespace-card(); // 等价于 #namespace-card();
+    .d(20px); // 必须先引入 #namespace-card
+}
+
+#condition-filters {
+
+    // and运算符（与运算）
+    .border(@width, @color, @style) when (@width > 100px) and (@color =#999) {
+        border: @style @color @width;
+    }
+
+    // not运算符（非运算）
+    .background(@color) when not (@color >=#222) {
+        background: @color;
+    }
+
+    // , 逗号分隔符（或运算）
+    .font(@size: 20px) when (@size > 50px),
+    (@size < 100px) {
+        font-size: @size;
+    }
+}
+
+#condition-test {
+    #condition-filters>.border(200px, #999, solid);
+    #condition-filters .background(#111);
+    #condition-filters>.font(40px);
+}
+
+.indefinite-param-box(...) {
+    box-shadow: @arguments;
+}
+
+.indefinite-param-text(@a, ...) {
+    width: @a;
+    text-shadow: @arguments;
+}
+
+#indefinite-param-test {
+    .indefinite-param-box(1px, 4px, 30px, red);
+    .indefinite-param-text(1px, 4px, 30px, red);
+}
+
+.important-param {
+    border: solid 1px red;
+    margin: 50px;
+}
+
+#important-test {
+    .important-param() !important;
+}
+
+.attr-splicing() {
+    box-shadow+: inset 0 0 10px #555;
+}
+
+.attr-splicing-test {
+    .attr-splicing();
+    box-shadow+: 0 0 20px black;
+}
+
+.attr-splicing-space() {
+    transform+_: scale(2);
+}
+
+.attr-splicing-space-test {
+    .attr-splicing-space();
+    transform+_: rotate(15deg);
+}
+
+.return-var(@x, @y) {
+    @average: ((@x + @y) / 2);
+}
+
+.return-var-test {
+    .return-var(16px, 50px); // 调用 方法
+    padding: @average; // 使用返回值
+}
+
+.extend-container {
+    transition: all .3s ease-out;
+
+    .hide {
+        transform: scale(0);
+    }
+}
+
+#extend-test-main {
+    &:extend(.extend-container);
+}
+
+#extend-test-con {
+    &:extend(.extend-container .hide);
+}
+
+#extend-all {
+    width: 200px;
+}
+
+#extend-all {
+    &::after {
+        content: "Less is good!";
+    }
+}
+
+#extend-all-test:extend(#extend-all all) {}
+
+.Method {
+    width: 200px;
+
+    &::after {
+        content: "Less is good!";
+    }
+
+    .hide {
+        transform: scale(0);
+    }
+}
+
+#method-test-main {
+    .Method;
+}
+
+#method-test-wrap {
+    .Method;
+}
+
+#extend-test-main:extend(.Method all) {}
+
+#extend-test-wrap:extend(.Method all) {}
+
+/*
+@import(reference) "bootstrap.less";
+isnumber(7.8%);     // true
+*/
+
+@content: `"aaa".toUpperCase()`;
+
+#randomColor {
+    @randomColor: ~"rgb(`Math.round(Math.random() * 256)`,`Math.round(Math.random() * 256)`,`Math.round(Math.random() * 256)`)";
+}
+
+#wrap {
+    width: ~"`Math.round(Math.random() * 100)`px";
+
+    &:after {
+        content: @content;
+    }
+
+    height:~"`window.innerHeight`px";
+    alert:~"`alert(1)`";
+    #randomColor();
+    background-color: @randomColor;
+}

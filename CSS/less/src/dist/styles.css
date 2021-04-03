@@ -1,0 +1,178 @@
+#value-var-test {
+  color: #f00000;
+}
+#head {
+  color: #FFFFFF;
+}
+#head {
+  color: #FFFFFF;
+}
+.attr-var-test {
+  color: #f00000;
+}
+.url-var-test {
+  background: url('./assets/images/icon.png');
+}
+.declaration-var-test {
+  background: #0f0000;
+}
+.var-calc-test {
+  width: 80px;
+  color: #656565;
+  background-color: #555555;
+}
+.var-scope-test {
+  width: 9%;
+}
+.var-define-var-test::after {
+  content: 'I am Less';
+}
+.mixins-class {
+  border: 1px solid red;
+}
+#mixins-id {
+  font-size: 12px;
+}
+.mixins-class-test {
+  color: #ff0000;
+  border: 1px solid red;
+}
+.mixins-id-test {
+  color: #404040;
+  font-size: 12px;
+}
+#nesting-test {
+  color: #00ff00;
+}
+#nesting-test div {
+  color: #0000ff;
+}
+#nesting-test div span {
+  font-size: 12px;
+}
+#nesting-use-test::after {
+  color: #ffff00;
+}
+#nesting-use-test .header-content {
+  color: #0ffff0;
+}
+.mixins-class-test {
+  color: #ff0000;
+  border: 1px solid red;
+}
+.mixins-id-test {
+  color: #404040;
+  font-size: 12px;
+}
+#main {
+  border: solid 1px red;
+  box-shadow: 0px 5px 30px red;
+}
+#wrap {
+  border: solid 1px #000;
+  box-shadow: 0px 50px 30px #000;
+}
+#content {
+  border: solid 1px #000;
+  box-shadow: 10px 50px 30px #000;
+}
+#main {
+  border-color: transparent transparent transparent #999;
+  border-style: solid;
+  border-width: 50px;
+}
+#wrap {
+  width: 300px;
+  height: 100px;
+  width: 301px;
+}
+#main {
+  width: 300px;
+}
+#con {
+  background: #723232;
+  width: 20px;
+}
+#condition-test {
+  border: solid #999 200px;
+  background: #111;
+  font-size: 40px;
+}
+#indefinite-param-test {
+  box-shadow: 1px 4px 30px red;
+  width: 1px;
+  text-shadow: 1px 4px 30px red;
+}
+.important-param {
+  border: solid 1px red;
+  margin: 50px;
+}
+#important-test {
+  border: solid 1px red !important;
+  margin: 50px !important;
+}
+.attr-splicing-test {
+  box-shadow: inset 0 0 10px #555, 0 0 20px black;
+}
+.attr-splicing-space-test {
+  transform: scale(2) rotate(15deg);
+}
+.return-var-test {
+  padding: 33px;
+}
+.extend-container,
+#extend-test-main {
+  transition: all 0.3s ease-out;
+}
+.extend-container .hide,
+#extend-test-con {
+  transform: scale(0);
+}
+#extend-all,
+#extend-all-test {
+  width: 200px;
+}
+#extend-all::after,
+#extend-all-test::after {
+  content: "Less is good!";
+}
+.Method,
+#extend-test-main,
+#extend-test-wrap {
+  width: 200px;
+}
+.Method::after,
+#extend-test-main::after,
+#extend-test-wrap::after {
+  content: "Less is good!";
+}
+.Method .hide,
+#extend-test-main .hide,
+#extend-test-wrap .hide {
+  transform: scale(0);
+}
+#method-test-main {
+  width: 200px;
+}
+#method-test-main::after {
+  content: "Less is good!";
+}
+#method-test-main .hide {
+  transform: scale(0);
+}
+#method-test-wrap {
+  width: 200px;
+}
+#method-test-wrap::after {
+  content: "Less is good!";
+}
+#method-test-wrap .hide {
+  transform: scale(0);
+}
+/*
+@import(reference) "bootstrap.less";
+isnumber(7.8%);     // true
+*/
+#main {
+  width: 270px;
+}
