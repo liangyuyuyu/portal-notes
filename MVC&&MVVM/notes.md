@@ -16,7 +16,7 @@
     * Model层：Model提供数据操作的接口，执行相应的业务逻辑，即界面数据的来源；
     
     <div align=left>
-        <img src="./assets/images/view-model-layer.png" width="600" alt="图片不存在" title="Model、View层"/>
+       <img src="./assets/images/view-model-layer.png" width="600" alt="图片不存在" title="Model、View层"/>
     </div>
 
 3. **有了View、Model的分层，那么问题就来了：View如何同步Model的变更？View和Model之间如何粘合在一起？**；
@@ -36,7 +36,7 @@
 4. Model、View、Controller三个层次的依赖关系如下：
 
     <div align=left>
-       <img src="./assets/images/mvc-dependency.png" width="400" alt="图片不存在" title="Model、View、Controller三个层次的依赖关系"/>
+       <img src="./assets/images/mvc-dependency.png" width="300" alt="图片不存在" title="Model、View、Controller三个层次的依赖关系"/>
     </div>
 
     * Controller、View都依赖Model层；
@@ -51,7 +51,7 @@
 5. View通过观察者模式收到Model变更的消息以后，会向Model请求最新的数据，然后重新更新界面；
 
 <div align=left>
-    <img src="./assets/images/mvc-call-relation.png" width="500" alt="图片不存在" title="MVC的调用关系"/>
+    <img src="./assets/images/mvc-call-relation.png" width="400" alt="图片不存在" title="MVC的调用关系"/>
 </div>
 
 上述流程看似没有什么特别的地方，但有几个需要特别关注的关键点：
@@ -114,4 +114,94 @@ Model 2模式最早在1998年应用在JSP应用程序当中，JSP Model 1应用�
 后来**这种模式几乎被应用在所有语言的Web开发框架当中**，如：PHP的ThinkPHP，Python的Dijango、Flask，NodeJS的Express，Ruby的RoR，基本都采纳了这种模式，**平常所讲的MVC基本是这种服务端的MVC**；
 
 # MVP
+* MVP模式有两种：
+    > Passive View
+    > Supervising Controller
 
+    现在大多数讨论的都是Passive View模式，本文会对PV模式进行较为详细的介绍，而SC模式则简单提及；
+* 历史背景：
+    * MVP模式是MVC模式的改良；
+    * 在上个世纪90年代，IBM旗下的子公司Taligent在用C/C++开发一个叫CommonPoint的图形界面应用系统的时候提出来的；
+* MVP（Passive View）的依赖关系：
+    * MVP打破了View原来对于Model的依赖，其余的依赖关系和MVC模式一致；
+    
+    <div align=left>
+       <img src="./assets/images/mvp-pv-dependency.png" width="300" alt="图片不存在" title="MVP（Passive View）的依赖关系"/>
+    </div>
+* MVP（Passive View）的调用关系：
+    * 用户对View的操作都会从View交移给Presenter；
+    * Presenter会执行相应的应用程序逻辑，并且对Model进行相应的操作；
+    * 这时**Model执行完业务逻辑以后，通过观察者模式把自己变更的消息传递传给Presenter（不是View）**；
+    * Presenter获取到Model变更的消息以后，通过View提供的接口更新界面；
+
+    <div align=left>
+       <img src="./assets/images/mvp-pv-call-relation.png" width="400" alt="图片不存在" title="MVP（Passive View）的调用关系"/>
+    </div>
+
+    * 关键点：
+        * **View不再负责同步的逻辑，由Presenter负责**，即**Presenter中既有应用程序逻辑也有同步逻辑**；
+        * **View需要提供操作界面的接口给Presenter进行调用（关键）**；
+* MVP（Passive View）总结：
+    * 在MVC中，Controller是不能操作View的，View也没有提供相应的接口；
+    * 在MVP中，Presenter可以操作View，View需要提供一组对界面操作的接口给Presenter进行调用；
+    * 在MVP中，Model仍然通过事件广播自己的变更，由Presenter监听，而不是View；
+* MVP（Passive View）的优缺点：
+    * 优点：
+        * **便于测试**：Presenter对View是通过接口进行，对Presenter进行不依赖UI环境的单元测试的步骤如下：
+            * Mock一个View对象，这个对象只需要实现了View的接口即可；
+            * 把View的接口依赖注入到Presenter中；
+            * 在单元测试时，可以完整的测试Presenter应用逻辑的正确性；
+        * **View可以进行组件化**：**在MVP中，View不依赖Model，即View与业务完全无关联**，它只需要提供一系列接口给上层操作，这样就可以做到高度可复用的View组件；
+    * 缺点：
+        * **Presenter中除了应用逻辑以外，还有大量的View->Model，Model->View的手动同步逻辑**，造成Presenter比较笨重，维护起来会比较困难；
+* MVP（Supervising Controller）：
+    * 上面讲的是MVP的**Passive View模式，该模式下View非常Passive，它几乎什么都不知道，Presenter让它干什么它就干什么**；
+    * 在Supervising Controller模式中，Presenter会把一部分简单的同步逻辑交给View自己去做，Presenter只负责比较复杂的、高层次的UI操作，所以可以把它看成一个Supervising Controller；
+    * Supervising Controller模式下的依赖和调用关系：
+
+        <div align=left>
+        <img src="./assets/images/mvp-sc-call-relation.png" width="400" alt="图片不存在" title="Supervising Controller模式下的依赖和调用关系"/>
+        </div>
+    * 由于Supervising Controller用得比较少，所以对它的讨论就到这里为止；
+
+# MVVM
+> MVVM可以看作是一种特殊的MVP（Passive View）模式，或说是对MVP模式的一种改良；
+> MVVM代表的是Model-View-ViewModel；
+* 历史背景
+    * MVVM模式最早是微软公司提出，并且了大量使用在.NET的WPF和Sliverlight中；
+    * 2005年微软工程师John Gossman在自己的博客上首次公布了MVVM模式；
+* ViewModel
+    * **ViewModel（Model of View）**，视图的模型，它的含义包含了领域模型（Domain Model）、视图的状态（State）；
+    * **在应用程序中，界面信息不仅仅只有领域模型，还可能包含一些视图状态，例如表格的排序状态，而这是Domain Model所不包含的，但也是需要显示的信息**；
+    * 可以简单把ViewModel理解为页面上所显示内容的数据抽象，和Domain Model不一样，**ViewModel更适合用来描述View**；
+* MVVM的依赖关系：
+    > MVVM的依赖关系和MVP依赖，只不过是把P换成了VM；
+
+    <div align=left>
+       <img src="./assets/images/mvvm-dependency.png" width="300" alt="图片不存在" title="MVVM的依赖关系"/>
+    </div>
+* MVVM的调用关系
+    * MVVM的调用关系和MVP一样，但在ViewModel中有一个叫**Binder，或Data-binding engine**的东西；
+    * **以前是由Presenter全部负责的View和Model之间数据同步操作，现在交给了Binder来处理**；
+    * 只需要在View的模版语法中，指令式地声明View上显示的内容是和Model的哪一块数据绑定的；
+    * 当ViewModel对进行Model更新的时候，Binder会自动把数据更新到View上；
+    * 当用户对View进行操作（如表单输入），Binder也会自动把数据更新到Model上；
+    * 这种方式称为：**Two-way data-binding，双向数据绑定**；
+
+    <div align=left>
+       <img src="./assets/images/mvvm-call-relation.png" width="400" alt="图片不存在" title="MVVM的依赖关系"/>
+    </div>
+* MVVM的优缺点
+    * 优点：
+        * **提高可维护性**：**解决了MVP大量的手动View和Model同步的问题**，提供双向绑定机制，提高了代码的可维护性；
+        * **简化测试**：因为同步逻辑是交由Binder做的，View跟着Model同时变更，所以只需要保证Model的正确性，View就正确，**大大减少了对View同步更新的测试**；
+    * 缺点：
+        * **过于简单的图形界面不适用**，或说牛刀杀鸡；
+        * 对于**大型的图形应用程序，视图状态较多，ViewModel的构建和维护的成本都会比较高**；
+        * **数据绑定**的声明是指令式地写在View的模版当中的，这些内容是**没法断点debug的**；
+
+# 总结
+* 从MVC->MVP->MVVM，就像打怪升级的过程，后者解决了前者遗留的问题，把前者的缺点优化成了优点；
+* 同样的Demo功能，代码从最开始的一堆文件，优化成了只需20几行代码就完成；
+
+[查看原文](https://github.com/livoras/blog/issues/11)
