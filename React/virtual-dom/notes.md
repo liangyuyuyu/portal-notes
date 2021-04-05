@@ -82,3 +82,4 @@
 4. 当同一层节点是列表时，最好不要用列表的索引作为key，因为当前面某项被删除时，后面项索引的变化会导致key发生变化，从而key就失效了；
 
 [查看原文：如何实现一个 Virtual DOM 算法](https://github.com/livoras/blog/issues/13)
+[网上都说操作真实 DOM 慢，但测试结果却比 React 更快，为什么？](https://www.zhihu.com/question/31809713)
