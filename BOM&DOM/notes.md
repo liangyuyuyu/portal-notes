@@ -596,3 +596,4 @@
     `namedItem()`|返回HTMLCollection中指定ID或name属性的元素，语法：HTMLCollection.namedItem(name)或HTMLCollection[name]，如：`document.getElementsByTagName("P")["myElement"]`；
 
 [查看原文](https://www.runoob.com/jsref/obj-window.html)
+[BOM&DOM面试题](https://github.com/liangyuyuyu/WebInterview)
