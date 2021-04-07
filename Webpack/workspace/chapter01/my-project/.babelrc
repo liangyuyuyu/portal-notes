@@ -1,0 +1,6 @@
+{
+    "presets": [
+        "@babel/preset-env", // ES6的babel preset配置
+        "@babel/preset-react" // React的babel preset配置
+    ]
+}
