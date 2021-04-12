@@ -1,6 +1,8 @@
 'use strict'
 
 const path = require('path');
+const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -11,7 +13,7 @@ module.exports = {
         path: path.join(__dirname, 'dist'), // 指定打包生成的目录
         filename: '[name].js' // 指定打包生成的文件名
     },
-    mode: 'production', // 设置为生产环境
+    mode: 'development', // production、development
     module: {
         rules: [
             {
@@ -34,12 +36,20 @@ module.exports = {
                 ]
             },
             {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
                     // 'file-loader'
                     {
-                        loader: 'url-loader', 
-                            options: {
+                        loader: 'url-loader',
+                        options: {
                             limit: 10240
                         }
                     }
@@ -53,5 +63,17 @@ module.exports = {
                 ]
             }
         ]
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin()
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, "dist"), // WDS服务的基础目录
+        host: 'localhost', // 服务器的ip地址
+        compress: true, // 服务器压缩
+        port: 3000, // 端口
+        open: true, // 自动打开页面
+        hot: true // 开启热更新
     }
 }

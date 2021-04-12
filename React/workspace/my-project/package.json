@@ -4,36 +4,37 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-watch": "./node_modules/.bin/webpack --config webpack.dev.js --watch",
     "serve": "./node_modules/.bin/webpack serve --config webpack.dev.js",
-    "build": "./node_modules/.bin/webpack --config webpack.prod.js"
+    "build": "./node_modules/.bin/webpack --config webpack.dev.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.13.14",
-    "@babel/preset-env": "^7.13.12",
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "css-loader": "^5.2.0",
-    "cssnano": "^5.0.0",
+    "css-loader": "^5.2.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "less": "^4.1.1",
-    "less-loader": "^8.0.0",
-    "mini-css-extract-plugin": "^1.4.1",
+    "less-loader": "^8.1.0",
     "node-sass": "^5.0.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
+    "ts-loader": "^8.1.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.31.2",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "antd": "^4.15.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
